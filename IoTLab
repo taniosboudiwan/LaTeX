@@ -1,0 +1,150 @@
+\documentclass[a4paper,12pt]{article}
+
+% Packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{longtable}
+
+% Title Section
+\title{Exploring LoRa - Time on Air}
+\author{Tanios Bou Diwan 211445  \\ \texttt{tanios.boudiwan@net.usj.edu.lb}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% Table of Contents and List of Figures
+\tableofcontents
+\listoffigures
+\newpage
+
+% Introduction Section
+\section{Introduction}
+\subsection{Advantages of LoRa modulation}\cite{lorawan_definition}
+\begin{itemize}
+    \item Long range communication: LoRaWAN gateways can transmit and receive signals over a distance of over 10 kilometers in rural areas and up to 3 kilometers in dense urban areas.
+    \item Low power consumption: LoRaWAN end devices are optimized to operate in low power mode and can last up to 10 years on a single coin cell battery.
+    \item Easy to deploy and construct: The nodes in the frequency bands don't require licenses, nor does the Spectrum for transmission.
+    \item Strong anti-interference: The protocol has the function of LBT, based on the aloha method, with automatic frequency jump and rate adaptation functions.
+\end{itemize}
+
+\subsection{How LoRa is compatible with LPWAN requirements and constraints?}
+LoRa aligns with LPWAN requirements for low power consumption and long-range coverage. Additionally, LoRa meets LPWAN constraints regarding limited data transmission rates, as well as latency and delays during data transmission.\cite{lpwan_guide}
+
+% Materials and Methods Section
+\section{Setting the Lab}
+\subsection{Arduino Settings}
+Arduino UNO is a microcontroller board based on the ATmega328P. It has 14 digital input/output pins (of which 6 can be used as PWM outputs), 6 analog inputs, a 16 MHz ceramic resonator, a USB connection, a power jack, an ICSP header and a reset button.\cite{arduino_uno}
+
+The main features are:
+\begin{itemize}
+    \item Memory
+    \begin{itemize}
+        \item AVR CPU at up to 16 MHz
+        \item 32 kB Flash
+        \item 2 kB SRAM
+        \item 1 kB EEPROM
+    \end{itemize}
+    \item Peripherals
+\begin{itemize}
+    \item 2 $\times$ 8-bit Timer/Counter with a dedicated period register and compare channels
+    \item 1 $\times$ 16-bit Timer/Counter with a dedicated period register, input capture, and compare channels
+    \item 1 $\times$ USART with fractional baud rate generator and start-of-frame detection
+    \item 1 $\times$ controller/peripheral Serial Peripheral Interface (SPI)
+    \item 1 $\times$ Dual mode controller/peripheral I2C
+    \item 1 $\times$ Analog Comparator (AC) with a scalable reference input
+    \item Watchdog Timer with separate on-chip oscillator
+    \item Six PWM channels
+    \item Interrupt and wake-up on pin change
+\end{itemize}
+\item Power
+\begin{itemize}
+    \item $2.7\text{--}5.5$ volts
+\end{itemize}
+\end{itemize}
+
+\subsection{Dragino Shield Settings}
+The Dragino LoRa Shield is a long-range transceiver on an Arduino shield form factor and based on Open source library. The LoRa Shield allows the user to send data and reach extremely long ranges at low data rates.\cite{dragino_lora_shield}
+
+\begin{itemize}
+    \item Compatible with 3.3v or 5v I/O Arduino Board
+    \item Compatible with Arduino Leonardo, Uno, Mega, DUE
+    \item Optional External Antenna via I-Pex connector
+    \item High sensitivity: down to -148 dBm
+\end{itemize}
+
+\subsection{Antenna}
+I am using a LoRa Antenna 868 MHz RF SMA Male, which is an omnidirectional rubber antenna designed for LoRa communication.\cite{simple_lora_prototype}
+
+\begin{itemize}
+    \item Compact and lightweight design
+    \item Strong signal reception capability
+    \item Operates in the 868 MHz frequency range
+    \item The antenna is omnidirectional, meaning it broadcasts and receives signals in all directions, offering wide coverage.
+\end{itemize}
+
+\subsection{Estimated Cost}
+\begin{itemize}
+    \item \textbf{Arduino Uno or Mega (1 unit)}: 
+    \begin{itemize}
+        \item Price: \$10 USD
+    \end{itemize}
+    
+    \item \textbf{Dragino LoRa Shield (1 unit)}: 
+    \begin{itemize}
+        \item Price: \$20 USD
+    \end{itemize}
+    
+    \item \textbf{868 MHz Antenna (1 unit)}: 
+    \begin{itemize}
+        \item Price: \$5 USD 
+    \end{itemize}
+\end{itemize}
+
+\noindent \textbf{Total Hardware Cost:} \$35 USD
+
+\begin{figure}[h]
+    \centering
+    \fbox{\includegraphics[width=0.8\textwidth]{WhatsApp_Image_2024-11-10_at_7.57.40_AM-removebg-preview.png}}
+    \caption{Arduino Uno equipped with a Dragino LoRa shield and an antenna}
+    \label{Arduino}
+\end{figure}
+
+\section{Performance Evaluation}
+\subsection{Time on Air}
+When a signal is sent from a sender, it takes a certain amount of time before a receiver receives this signal. This time is called Time on Air (ToA).\cite{lora_duty_cycle}
+
+\begin{longtable}{|c|c|c|c|}
+\hline
+\textbf{Spreading Factor (SF)} & \textbf{Bandwidth (B)} & \textbf{Coding Rate (CR)} & \textbf{Time on Air (ToA) [µs]} \\
+\hline
+\endfirsthead
+
+\hline
+\textbf{Spreading Factor (SF)} & \textbf{Bandwidth (B)} & \textbf{Coding Rate (CR)} & \textbf{Time on Air (ToA) [µs]} \\
+\hline
+\endhead
+
+12 & 125,000 & 4/5 & 1,484,400 \\
+12 & 125,000 & 4/8 & 1,975,652 \\
+10 & 125,000 & 4/8 & 494,584 \\
+10 & 125,000 & 4/5 & 371,672 \\
+7 & 125,000 & 4/5 & 62,616 \\
+7 & 125,000 & 4/8 & 87,196 \\
+\hline
+\end{longtable}
+
+% Bibliography Section
+\section{References}
+\bibliographystyle{unsrt}
+\bibliography{references.bib}
+
+
+
+\end{document}
